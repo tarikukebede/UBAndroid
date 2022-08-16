@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/margin_normal"
+    tools:context=".Fragments.ReadingSubmissionFragment">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_normal"
+        android:layout_centerInParent="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reading_input"
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_name"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_submit_reading_customer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy_name"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textColor="@color/colorDarkGray"
+                    android:layout_alignParentEnd="true"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_meter_serial"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_submit_reading_meter_serial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy_meter_serial"
+                    android:textSize="@dimen/text_size_large"
+                    android:textColor="@color/colorDarkGray"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+
+
+
+
+            <EditText
+                android:id="@+id/et_submit_reading_meter_reading"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_input_height"
+                android:hint="@string/reading_input_hint"
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="@color/colorDarkGray"
+                android:layout_marginTop="@dimen/margin_large"
+                android:background="@drawable/round_corner_background"
+                android:padding="@dimen/fab_margin"
+                />
+
+            <TextView
+                android:id="@+id/tv_submit_reading_submit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/margin_x_large"
+                android:background="@drawable/round_btn_background"
+                android:gravity="center"
+                android:text="@string/btn_label_submit_reading"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_large" />
+
+            <TextView
+                android:id="@+id/tv_submit_reading_cancel"
+                android:textSize="@dimen/text_size_large"
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/margin_x_large"
+                android:text="@string/label_cancel"
+                android:textColor="@color/white"
+                android:background="@drawable/ic_round_background_danger"
+                android:textAllCaps="false"/>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

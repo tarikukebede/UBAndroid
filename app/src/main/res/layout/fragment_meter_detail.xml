@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_corner_bg_white"
+        android:padding="@dimen/margin_normal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:id="@+id/ll_meter_detail_action_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/tv_bill_detail_submit_reading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_round_cornor_bg_accent"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/margin_small"
+                        android:paddingTop="@dimen/margin_x_small"
+                        android:paddingEnd="@dimen/margin_small"
+                        android:paddingBottom="@dimen/margin_x_small"
+                        android:text="@string/btn_label_submit_reading"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_x_medium" />
+
+                    <TextView
+                        android:id="@+id/tv_bill_detail_enter_reason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:background="@drawable/ic_round_background_danger"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/margin_small"
+                        android:paddingTop="@dimen/margin_x_small"
+                        android:paddingEnd="@dimen/margin_small"
+                        android:paddingBottom="@dimen/margin_x_small"
+                        android:text="@string/btn_label_enter_reason"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_x_medium" />
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_bill_detail_edit"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="@dimen/margin_large"-->
+<!--                        android:background="@drawable/ic_round_cornor_bg_primary"-->
+<!--                        android:gravity="center"-->
+<!--                        android:paddingStart="@dimen/margin_small"-->
+<!--                        android:paddingTop="@dimen/margin_x_small"-->
+<!--                        android:paddingEnd="@dimen/margin_small"-->
+<!--                        android:paddingBottom="@dimen/margin_x_small"-->
+<!--                        android:text="@string/btn_label_edit"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="@dimen/text_size_x_medium" />-->
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_large"
+                android:background="@color/colorLightGray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_customer"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_name"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_meter_detail_customer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_phone"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_kebele"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_meter_detail_customer_kebele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_wereda"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_wereda"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_wereda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_wereda"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_house_no"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_house_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_sub_city"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_sub_city"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_sub_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_sub_city"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_large"
+                android:background="@color/colorLightGray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_bill_and_meter"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_meter_serial"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_meter_serial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_bill_id"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_bill_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_contract_no"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_contract_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_wereda"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_current_reading"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_current_reading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_sub_city"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_prev_reading"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_prev_reading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_sub_city"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_consumption"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_consumption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_sub_city"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/label_penalty"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+                <TextView
+                    android:id="@+id/tv_bill_detail_penalty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="1"
+                    android:text="@string/dummy_sub_city"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_x_medium" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
