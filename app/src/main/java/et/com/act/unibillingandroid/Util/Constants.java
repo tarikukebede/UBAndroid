@@ -19,6 +19,7 @@ public class Constants {
     public static final int PERMISSION_RESPONSE_CODE = 1001;
     public static final int PERMISSION_REQUEST_CODE = 1002;
     public static final int ERROR_DIALOG_REQUEST_CODE = 9001;
+    public static final int FILE_CREATE_REQUEST = 9002;
 
     public static final float DEFAULT_CAMERA_ZOOM = 15f;
     public static final String UNKNOWN = "----";
@@ -38,4 +39,6 @@ public class Constants {
     public static final String METERS_WITH_UNCLEAN_COORDINATES = "meters_with_unclean_coordinates";
 
     public static final String[] EXCEL_EXPORT_FORMAT = {"meterId", "currentReading", "readOn","gps"};
+
+
 }

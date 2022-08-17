@@ -3,12 +3,28 @@ package et.com.act.unibillingandroid.Activities;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
-import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.Settings;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -22,26 +38,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -52,7 +48,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import et.com.act.unibillingandroid.Dto.Loading;
 import et.com.act.unibillingandroid.Dto.State;
@@ -93,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements NetworkRequestLis
 
     private final boolean isLocationPermissionGranted = false;
     private final boolean readPermissionGranted = false;
-
     private final boolean writePermissionGranted = false;
+
     private final ArrayList<String> permissionsRejected = new ArrayList<>();
 
     private Toolbar toolbar;
@@ -117,14 +115,19 @@ public class MainActivity extends AppCompatActivity implements NetworkRequestLis
     private Location readerCurrentLocation;
 
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<Intent> writeFileResultLauncher;
+
+    private Uri fileUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+
         initPermissions();
         runPermissionLocationNetworkRequests();
+
         checkGoogleServices();
         initLocationRequest();
         initLiveData();
@@ -151,9 +154,13 @@ public class MainActivity extends AppCompatActivity implements NetworkRequestLis
         int id = item.getItemId();
         if(id == R.id.menu_export_to_remote){
             exportToRemote();
-        }else if(id == R.id.menu_import_from_remote){
+        }else if (id == R.id.menu_import_from_remote) {
             importFromRemote();
-        }else if(id ==R.id.menu_export_to_excel){
+        } else if (id == R.id.menu_export_to_excel) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                Uri pickerInitialUri = DocumentsContract.buildDocumentUri("et.com.act.unibillingandroid", "sample.txt");
+                createFile(pickerInitialUri);
+            }
             exportToExcel();
         }
 
@@ -249,40 +256,43 @@ public class MainActivity extends AppCompatActivity implements NetworkRequestLis
        });
     }
 
-    private void showLoadingScreen(String title, String message, int image){
+    private void showLoadingScreen(String title, String message, int image) {
         Helper.openFragment(getSupportFragmentManager(), R.id.fl_main_activity, new LoadingFragment());
-        updateLoadingScreen(title, message,image);
+        updateLoadingScreen(title, message, image);
     }
 
-    private void exportToExcel(){
-        Toast.makeText(this, "This feature is currently not available", Toast.LENGTH_LONG).show();
-//        showLoadingScreen("Exporting to file", "Your reading are being exported to an excel file. You can find the file in your downloads folder",0);
-//        mainActivityViewModel.getMetersByReadingStatus(Constants.TRUE_STRING, meters -> {
-//            if(meters != null){
-//                Log.d(TAG, "exportToExcel: ---->" + meters.size());
-//                if(checkStoragePermission()){
-//                    Log.d(TAG, "exportToExcel: ---->" + "permission");
-//                    List<MeterReadingDto> requestDtoList = Mapper.mapToReadingRequestDto(meters);
-//                    FilesHelper.exportToExcel(MainActivity.this, requestDtoList);
-//                    Helper.openFragment(getSupportFragmentManager(), R.id.fl_main_activity, new MeterReadingFragment());
-//                }else{
-//                    Log.d(TAG, "exportToExcel: ---->" + "permission");
-//                    requestStoragePermission();
-//                }
-//            }else{
-//                Toast.makeText(this, "No meters to export.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+    private void exportToExcel() {
+        showLoadingScreen("Exporting to file", "Your reading are being exported to an excel file. You can find the file in your downloads folder", 0);
+        mainActivityViewModel.getMetersByReadingStatus(Constants.TRUE_STRING, meters -> {
+            if (meters != null) {
+                List<MeterReadingDto> requestDtoList = Mapper.mapToReadingRequestDto(meters);
+                Log.d(TAG, "exportToExcel: ---->" + meters.size());
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                    if (checkStoragePermission()) {
+                        Log.d(TAG, "exportToExcel: ---->" + "permission");
+                        FilesHelper.exportToExcelLegacy(MainActivity.this, requestDtoList);
+                        Helper.openFragment(getSupportFragmentManager(), R.id.fl_main_activity, new MeterReadingFragment());
+                    } else {
+                        Log.d(TAG, "exportToExcel: ---->" + "permission");
+                        requestStoragePermission();
+                    }
+                } else {
+                    runOnUiThread(() -> FilesHelper.exportToExcel(MainActivity.this, requestDtoList, fileUri));
+                }
+            } else {
+                Toast.makeText(this, "No meters to export.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
     @Override
     public void OnNetworkRequestCompleteListener(State state) {
-       String responseName = state.getName();
-       switch (responseName){
-           case Url.FETCH_METERS:
-               handleMeterFetchResult(state);
-               break;
+        String responseName = state.getName();
+        switch (responseName) {
+            case Url.FETCH_METERS:
+                handleMeterFetchResult(state);
+                break;
            case Url.SUBMIT_METER_READINGS:
                handleReadingSubmissionResult(state);
                break;
@@ -290,16 +300,20 @@ public class MainActivity extends AppCompatActivity implements NetworkRequestLis
 
     }
 
-    private void runPermissionLocationNetworkRequests(){
+    private void runPermissionLocationNetworkRequests() {
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
         permissions.add(ACCESS_NETWORK_STATE);
-        permissions.add(INTERNET);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            permissions.add(WRITE_EXTERNAL_STORAGE);
+            permissions.add(READ_EXTERNAL_STORAGE);
+        }
 
         permissionRequestResult = findUnAskedPermissions(permissions);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(permissionRequestResult.size() > 0){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (permissionRequestResult.size() > 0) {
                 requestPermissions(permissionRequestResult.toArray(new String[permissionRequestResult.size()]), Constants.PERMISSION_RESPONSE_CODE);
             }
         }
@@ -445,24 +459,28 @@ public class MainActivity extends AppCompatActivity implements NetworkRequestLis
     }
 
     private void initPermissions () {
-
-        permissions.add(ACCESS_FINE_LOCATION);
-        permissions.add(ACCESS_COARSE_LOCATION);
-        permissions.add(WRITE_EXTERNAL_STORAGE);
-        permissions.add(READ_EXTERNAL_STORAGE);
-
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if(result.getResultCode() == Activity.RESULT_OK){
-                    if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.R){
-                        if(Environment.isExternalStorageManager()){
-                            Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
-                        }
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if (Environment.isExternalStorageManager()) {
+                        Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
                     }
                 }
+            } else {
+                Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        writeFileResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Uri uri = Objects.requireNonNull(result.getData()).getData();
+                Log.d(TAG, "onActivityResult: " + uri);
+                fileUri = uri;
+                exportToExcel();
+            } else {
+                Toast.makeText(getApplicationContext(), "File not created", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -516,11 +534,22 @@ public class MainActivity extends AppCompatActivity implements NetworkRequestLis
         }
     }
 
-    public  void updateLoadingScreen(String title, String message, int image){
+    public void updateLoadingScreen(String title, String message, int image) {
         Loading loading = new Loading();
         loading.setLoadingTitle(title);
         loading.setLoadingMessage(message);
         loading.setLoadingImage(image);
         mainActivityViewModel.setLoading(loading);
     }
+
+
+    private void createFile(Uri pickerInitialUri) {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/text");
+        intent.putExtra(Intent.EXTRA_TITLE, "Bill_Reading_" + new Date() + ".xls");
+        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri);
+        writeFileResultLauncher.launch(intent);
+    }
+
 }
